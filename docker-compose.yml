@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  grpc-server:
+    build: .
+    container_name: grpc_server
+    ports:
+      - "50051:50051"
+    volumes:
+      - ./db.sqlite:/app/db.sqlite
+    depends_on:
+      - evans
+
+  evans:
+    image: ktr0731/evans
+    container_name: evans
+    command: ["--host", "grpc-server", "--port", "50051", "repl"]
+    tty: true
+    stdin_open: true
+    depends_on:
+      - grpc-server

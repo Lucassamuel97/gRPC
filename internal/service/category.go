@@ -2,7 +2,6 @@ package service
 
 import (
 	"context"
-	"io"
 
 	"github.com/Lucassamuel97/gRPC/internal/database"
 	"github.com/Lucassamuel97/gRPC/internal/pb"
