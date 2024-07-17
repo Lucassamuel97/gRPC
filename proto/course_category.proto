@@ -1,0 +1,26 @@
+syntax = "proto3";
+package pb;
+option go_package = "internal/pb";
+
+message blank{}
+
+message Category {
+    string id = 1;
+    string name = 2;
+    string description = 3;
+}
+
+message CreateCategoryRequest {
+    string name = 1;
+    string description = 2;
+}
+
+message CategoryGetRequest {
+    string id = 1;
+}
+
+service CategoryService {
+    rpc CreateCategory(CreateCategoryRequest) returns (Category) {}
+    rpc CreateCategoryStreamBidirectional(stream CreateCategoryRequest) returns (stream Category) {}
+    rpc GetCategory(CategoryGetRequest) returns (Category) {}
+}
