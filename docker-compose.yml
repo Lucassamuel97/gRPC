@@ -1,4 +1,4 @@
-version: '3.8'
+version: '3.9'
 
 services:
   grpc-server:
@@ -8,14 +8,12 @@ services:
       - "50051:50051"
     volumes:
       - ./db.sqlite:/app/db.sqlite
-    depends_on:
-      - evans
 
   evans:
-    image: ktr0731/evans
+    image: ghcr.io/ktr0731/evans:0.10.11
     container_name: evans
-    command: ["--host", "grpc-server", "--port", "50051", "repl"]
+    command: ["repl", "--host", "grpc-server", "--port", "50051", "--proto", "/proto/course_category.proto", "--package", "pb", "--service", "CategoryService"]
+    volumes:
+      - ./proto:/proto
     tty: true
     stdin_open: true
-    depends_on:
-      - grpc-server
