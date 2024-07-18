@@ -25,15 +25,15 @@ docker-compose exec evans evans repl --host grpc-server --port 50051 --proto /pr
 ```
 
 4. Interagir com o Evans no REPL
-Lista os serviços
+- Lista os serviços
 ```sh
     show service
 ```
-Selecionar o serviço:
+- Selecionar o serviço:
 ```sh
     service CategoryService
 ```
-chamar um método (no exemplo: CreateCategory):
+- chamar um método (no exemplo: CreateCategory):
 ```sh
     call CreateCategory
 ```

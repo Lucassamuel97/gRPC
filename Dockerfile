@@ -1,6 +1,11 @@
 # Usar a imagem base oficial do Go
 FROM golang:1.21
 
+# Instalar protoc e o plugin protoc-gen-go e protoc-gen-go-grpc
+RUN apt-get update && apt-get install -y protobuf-compiler
+RUN go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
+RUN go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
+
 # Definir o diretório de trabalho dentro do contêiner
 WORKDIR /app
 
@@ -10,6 +15,9 @@ RUN go mod download
 
 # Copiar o restante do código-fonte para o diretório de trabalho
 COPY . .
+
+# Gerar os arquivos Go a partir dos arquivos proto
+RUN protoc --go_out=. --go-grpc_out=. proto/course_category.proto
 
 # Compilar o binário do servidor gRPC
 RUN go build -o /grpcServer ./cmd/grpcServer
